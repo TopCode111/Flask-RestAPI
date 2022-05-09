@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+    flask_gunicorn:
+        volumes:
+          - static:/app/static
+        env_file:
+           - .env.prod
+        build:
+          context: ./
+          dockerfile: prod.Dockerfile
+        ports:
+          - "8000:8000"
+        depends_on:
+          - db
+    nginx:
+        build: ./nginx
+        volumes:
+          - static:/static
+        ports:
+          - "80:80"
+        depends_on:
+          - flask_gunicorn
+    db:
+      image: mysql:8.0
+      cap_add:
+        - SYS_NICE
+      environment:
+        MYSQL_DATABASE: downpos
+        MYSQL_ROOT_PASSWORD: root
+      ports:
+        - '3306:3306'
+      volumes:
+        - ./db:/docker-entrypoint-initdb.d/:ro
+volumes:
+  static:

@@ -1,0 +1,495 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "description": "",
+    "version": "1.0.0",
+    "title": "API Endpoint"
+  },
+  "servers": [
+    {
+      "url": "http://"
+    },
+    {
+      "url": "https://"
+    }
+  ],
+  "tags": [
+    {
+      "name": "NowPos Request",
+      "description": "Example API for requesting and return nowpos requests"
+    },
+    {
+      "name": "PosSave Request",
+      "description": "Example API for requesting and return possavs requests"
+    }
+  ],
+  "paths": {
+    "/action-index/": {
+      "get": {
+        "tags": [
+          "NowPos Request"
+        ],
+        "summary": "Action index data",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/nowpos-data/": {
+      "get": {
+        "tags": [
+          "NowPos Request"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "ID of the cat that we want to match"
+          },
+          {
+            "name": "事業所CD",
+            "in": "query",
+            "required": false,
+            "description": "事業所CD of the cat that we want to match"
+          }
+        ],
+        "summary": "Show NowPos data",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "NowPos Request"
+        ],
+        "summary": "Create a new NowPos request system",
+        "requestBody": {
+          "description": "Book Request Post Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/nowPosRequestPostBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/nowpos-data/{id}/": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of the cat that we want to match"
+        }
+      ],
+      "get": {
+        "tags": [
+          "NowPos Request"
+        ],
+        "summary": "Show single NowPos data",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "NowPos Request"
+        ],
+        "summary": "Update a new NowPos request system",
+        "requestBody": {
+          "description": "Book Request Post Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/nowPosRequestPostBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete NowPos Request by ID",
+        "tags": [
+          "NowPos Request"
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Failed. Misunderstood Request."
+          },
+          "404": {
+            "description": "Failed. Book Request not found."
+          }
+        }
+      }
+    },
+    "/jigyosyo-data/": {
+      "get": {
+        "tags": [
+          "NowPos Request"
+        ],
+        "parameters": [
+          {
+            "name": "事業所CD",
+            "in": "query",
+            "required": false,
+            "description": "事業所CD of the cat that we want to match"
+          }
+        ],
+        "summary": "Show jigyosyo data from table 事業所",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/binninzu-data/": {
+      "get": {
+        "tags": [
+          "NowPos Request"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "id of the cat that we want to match"
+          },
+          {
+            "name": "日付",
+            "in": "query",
+            "required": false,
+            "description": "日付 of the cat that we want to match"
+          },
+          {
+            "name": "送迎区分",
+            "in": "query",
+            "required": false,
+            "description": "送迎区分 of the cat that we want to match"
+          },
+          {
+            "name": "出発時間",
+            "in": "query",
+            "required": false,
+            "description": "出発時間 of the cat that we want to match"
+          }
+        ],
+        "summary": "Show binninzu data from table 事業所",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/possavs/": {
+      "get": {
+        "tags": [
+          "PosSave Request"
+        ],
+         "parameters": [
+          {
+            "name": "日付",
+            "in": "query",
+            "required": false,
+            "description": "日付 of the date that we want to match"
+          },
+           {
+            "name": "時間",
+            "in": "query",
+            "required": false,
+            "description": "時間 of the date that we want to match"
+          },
+           {
+            "name": "lat",
+            "in": "query",
+            "required": false,
+            "description": "lat of the date that we want to match"
+          },
+           {
+            "name": "lng",
+            "in": "query",
+            "required": false,
+            "description": "lng of the date that we want to match"
+          },
+           {
+            "name": "dist",
+            "in": "query",
+            "required": false,
+            "description": "dist of the date that we want to match"
+          },
+           {
+            "name": "事業所CD",
+            "in": "query",
+            "required": false,
+            "description": "事業所CD of the date that we want to match"
+          }
+        ],
+        "summary": "Show NowPos data",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/possavs-data/": {
+      "get": {
+        "tags": [
+          "PosSave Request"
+        ],
+        "summary": "Show NowPos data",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "PosSave Request"
+        ],
+        "summary": "Create a new NowPos request system",
+        "requestBody": {
+          "description": "Book Request Post Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/posSaveRequestPostBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      }
+    },
+    "/possavs-data/{id}/": {
+      "parameters": [
+        {
+          "name": "id",
+          "in": "path",
+          "required": true,
+          "description": "ID of the cat that we want to match"
+        }
+      ],
+      "get": {
+        "tags": [
+          "PosSave Request"
+        ],
+        "summary": "Show PosSave NowPos data",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "PosSave Request"
+        ],
+        "summary": "Update a PosSave request system",
+        "requestBody": {
+          "description": "Book Request Post Object",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/posSaveRequestPostBody"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Failed. Bad post data."
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete PosSave Request by ID",
+        "tags": [
+          "PosSave Request"
+        ],
+        "responses": {
+          "204": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Failed. Misunderstood Request."
+          },
+          "404": {
+            "description": "Failed. Book Request not found."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "nowPosRequestPostBody": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 6
+          },
+          "日付": {
+            "type": "string",
+            "format": "date"
+          },
+          "時間": {
+            "type": "string",
+            "format": "string",
+             "example": "15:46:33"
+          },
+          "運転手": {
+            "type": "string",
+            "format": "string",
+             "example": "",
+              "maxLength": 20
+          },
+          "Posx": {
+            "type": "number",
+            "format": "float"
+          },
+          "Posy": {
+            "type": "number",
+            "format": "float"
+          },
+          "rest": {
+            "type": "string",
+            "format": "string",
+            "example": "",
+            "maxLength": 1
+          },
+          "battery": {
+            "type": "string",
+            "format": "string",
+            "example": "",
+            "maxLength": 3
+          },
+          "出発時間": {
+            "type": "string",
+            "format": "string",
+            "example": "15:46:33"
+          },
+          "事業所CD": {
+            "type": "string",
+            "format": "string",
+            "example": "A",
+            "maxLength": 4
+          },
+          "status": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 20
+          }
+        }
+      },
+      "posSaveRequestPostBody": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "string",
+            "example": "",
+            "maxLength": 3
+          },
+          "日付": {
+            "type": "string",
+            "format": "date"
+          },
+          "時間": {
+            "type": "string",
+            "format": "string",
+             "example": "15:46:33"
+          },
+          "lat": {
+            "type": "number",
+            "format": "float"
+          },
+          "lng": {
+            "type": "number",
+            "format": "float"
+          },
+          "rest": {
+            "type": "string",
+            "format": "string",
+            "example": "",
+            "maxLength": 1
+          },
+          "imei": {
+            "type": "string",
+            "format": "string",
+            "example": "",
+            "maxLength": 50
+          },
+          "battery": {
+            "type": "string",
+            "format": "string",
+            "example": "",
+            "maxLength": 3
+          },
+          "出発時間": {
+            "type": "string",
+            "format": "string",
+            "example": "15:46:33"
+          },
+          "事業所CD": {
+            "type": "string",
+            "format": "string",
+            "example": "A",
+            "maxLength": 4
+          },
+          "status": {
+            "type": "string",
+            "format": "string",
+            "maxLength": 20
+          }
+        }
+      }
+    }
+  }
+}
