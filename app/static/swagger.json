@@ -268,6 +268,44 @@
         "tags": [
           "PosSave Request"
         ],
+        "parameters": [
+          {
+            "name": "日付",
+            "in": "query",
+            "required": false,
+            "description": "日付 of the date that we want to match"
+          },
+           {
+            "name": "時間",
+            "in": "query",
+            "required": false,
+            "description": "時間 of the date that we want to match"
+          },
+           {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "description": "lat of the date that we want to match"
+          },
+           {
+            "name": "時間1",
+            "in": "query",
+            "required": false,
+            "description": "lng of the date that we want to match"
+          },
+           {
+            "name": "時間2",
+            "in": "query",
+            "required": false,
+            "description": "dist of the date that we want to match"
+          },
+           {
+            "name": "事業所CD",
+            "in": "query",
+            "required": false,
+            "description": "事業所CD of the date that we want to match"
+          }
+        ],
         "summary": "Show NowPos data",
         "responses": {
           "200": {
@@ -410,6 +448,22 @@
             "example": "",
             "maxLength": 3
           },
+          "binkubun": {
+            "type": "string",
+            "format": "string",
+            "example": "1",
+            "maxLength": 1
+          },
+          "deptime": {
+            "type": "string",
+            "format": "string",
+            "example": "15:46:33"
+          },
+          "imei": {
+            "type": "string",
+            "format": "string",
+            "example": ""
+          },
           "出発時間": {
             "type": "string",
             "format": "string",
@@ -443,8 +497,8 @@
           },
           "時間": {
             "type": "string",
-            "format": "string",
-             "example": "15:46:33"
+            "format": "time",
+            "example": "15:46:33"
           },
           "lat": {
             "type": "number",

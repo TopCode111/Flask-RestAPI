@@ -18,7 +18,7 @@ class DNowposSchema(ma.Schema):
 
 class PosSaveSchema(ma.Schema):
     class Meta:
-        fields = ('id', '日付', '時間', 'lat', 'lng', 'rest', 'imei', 'battery', '出発時間', '事業所CD', 'status')
+        fields = ('事業所CD', 'id', '日付', '時間', 'lng', 'lat', '出発時間', 'battery', 'imei',  'rest', 'status')
 
 
 class PosSaveShortSchema(ma.Schema):

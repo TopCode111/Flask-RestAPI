@@ -11,13 +11,25 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 # Define the database - we are working with
 # SQLite for this example
-SQLALCHEMY_DATABASE_URI = 'mysql://{}:{}@{}:{}/{}'.format(
-    os.getenv('POSTGRES_USER'),
-    os.getenv('POSTGRES_PASSWORD'),
-    os.getenv('POSTGRES_HOST'),
-    os.getenv('POSTGRES_PORT'),
-    os.getenv('POSTGRES_DB'),
-)
+if 'POSTGRES_DB' in os.environ:
+    SECRET_KEY = os.environ['SECRET_KEY']
+    SQLALCHEMY_DATABASE_URI = 'mysql://{}:{}@{}:{}/{}'.format(
+        os.environ['POSTGRES_USER'],
+        os.environ['POSTGRES_PASSWORD'],
+        os.environ['POSTGRES_HOST'],
+        os.environ['POSTGRES_PORT'],
+        os.environ['POSTGRES_DB'],
+    )
+else:
+    SECRET_KEY = os.getenv('SECRET_KEY')
+    SQLALCHEMY_DATABASE_URI = 'mysql://{}:{}@{}:{}/{}'.format(
+        os.getenv('POSTGRES_USER'),
+        os.getenv('POSTGRES_PASSWORD'),
+        os.getenv('POSTGRES_HOST'),
+        os.getenv('POSTGRES_PORT'),
+        os.getenv('POSTGRES_DB'),
+    )
+    
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 #
 # # Application threads. A common general assumption is
@@ -34,4 +46,4 @@ SQLALCHEMY_TRACK_MODIFICATIONS = False
 # CSRF_SESSION_KEY = "secret"
 
 # Secret key for signing cookies
-SECRET_KEY = os.getenv('SECRET_KEY')
+#SECRET_KEY = os.getenv('SECRET_KEY')

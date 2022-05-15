@@ -7,7 +7,7 @@ from flask_swagger_ui import get_swaggerui_blueprint
 from flask_cors import CORS
 
 # Define the WSGI application object
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 CORS(app)
 
