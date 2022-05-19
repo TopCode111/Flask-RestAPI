@@ -116,8 +116,8 @@ class PosSave(db.Model):
     __tablename__ = "posSavs"
 
     id = db.Column(db.String(3), primary_key=True)
-    日付 = db.Column(db.Date)
-    時間 = db.Column(db.Time)
+    日付 = db.Column(db.Date, primary_key=True)
+    時間 = db.Column(db.Time, primary_key=True)
     lat = db.Column(db.Float)
     lng = db.Column(db.Float)
     rest = db.Column(db.String(1))

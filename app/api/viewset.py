@@ -286,21 +286,10 @@ class NowPosSingleView(Resource):
             db.session.commit()
             
             #[put]でもpossavsにinsertは可能
-            queryset1 = PosSave.query.get(id)
-            if queryset1 is not None:
-                queryset1.id = id
-                queryset1.日付 = 日付
-                queryset1.時間 = 時間
-                queryset1.imei = imei
-                queryset1.lat = Posx
-                queryset1.lng = Posy
-                queryset1.rest = rest
-                queryset1.battery = battery
-                queryset1.出発時間 = 出発時間
-                queryset1.事業所CD = 事業所CD
-                queryset1.status = status                           
-                db.session.commit()
-                
+            queryset1 = PosSave(id=id, 日付=日付, 時間=時間, lat=Posx, lng=Posy, imei=imei, rest=rest, battery=battery, 出発時間=出発時間,
+                           事業所CD=事業所CD, status=status, )
+            db.session.add(queryset1) 
+            db.session.commit()              
                 
             return {
                 'id': str(id),
@@ -468,9 +457,9 @@ class PossavsDataView(Resource):
 
 class PossavsDataSingleView(Resource):
 
-    def get(self, id):
-        queryset = PosSave.query.filter_by(id=id)
-        if queryset.count() > 0:
+    def get(self, id,_date,_time):
+        queryset = PosSave.query.filter((PosSave.id == id) & (PosSave.日付 ==_date) & (PosSave.時間 ==_time))
+        if queryset.count() == 1:
             result = queryset.one()
             res = {
                 "事業所CD": result.事業所CD,
@@ -478,7 +467,7 @@ class PossavsDataSingleView(Resource):
                 "日付": str(result.日付),
                 "時間": str(result.時間),
                 "lng": result.lng,
-                "lat": result.lng,
+                "lat": result.lat,
                 "出発時間": str(result.出発時間),    
                 "battery": result.battery,                
                 "imei": result.imei,
@@ -490,9 +479,10 @@ class PossavsDataSingleView(Resource):
             return [], 204
         
 
-    def put(self, id):
-        日付 = request.json['日付']
-        時間 = request.json['時間']
+    def put(self, id,_date,_time):
+        # _id = request.json['id']
+        # 日付 = request.json['日付']
+        # 時間 = request.json['時間']
         lat = request.json['lat']
         lng = request.json['lng']
         rest = request.json['rest']
@@ -502,27 +492,42 @@ class PossavsDataSingleView(Resource):
         事業所CD = request.json['事業所CD']
         status = request.json['status']
 
-        queryset = PosSave.query.get(id)
-        if queryset is not None:
-            queryset.id = id
-            queryset.日付 = 日付
-            queryset.時間 = 時間
-            queryset.lat = lat
-            queryset.lng = lng
-            queryset.rest = rest
-            queryset.imei = imei
-            queryset.battery = battery
-            queryset.出発時間 = 出発時間
-            queryset.事業所CD = 事業所CD
-            queryset.status = status
+        queryset1 = PosSave.query.filter_by(id=id,日付=_date,時間=_time).first()
+        if queryset1 is not None:
+        #if queryset1.count() == 1:
+            # queryset1.id = _id
+            # queryset1.日付 = 日付
+            # queryset1.時間 = 時間
+            queryset1.lat = lat
+            queryset1.lng = lng
+            queryset1.rest = rest
+            queryset1.imei = imei
+            queryset1.battery = battery
+            queryset1.出発時間 = 出発時間
+            queryset1.事業所CD = 事業所CD
+            queryset1.status = status
+            
             db.session.commit()
-            return possave_schema.dump(queryset)
+            res = {
+                "事業所CD": 事業所CD,
+                "id": id,
+                "日付": str(_date),
+                "時間": str(_time),
+                "lng": lng,
+                "lat": lat,
+                "出発時間": str(出発時間),    
+                "battery": battery,                
+                "imei": imei,
+                "rest": rest,
+                "status": status
+            }
+            return res
 
-        return make_response(jsonify({"error": "Invalid credentials "}), 400)
+        return make_response(jsonify({"error": "無効なキー"}), 400)
 
-    def delete(self, id):
-        queryset = PosSave.query.filter_by(id=id)
-        if queryset.count() > 0:
+    def delete(self, id,_date,_time):
+        queryset = PosSave.query.filter((PosSave.id == id) & (PosSave.日付 ==_date) & (PosSave.時間 ==_time))
+        if queryset.count() == 1:
             db.session.delete(queryset.one())
             db.session.commit()
             return make_response(jsonify({"message": "Deleted successfully!"}), 204)
@@ -599,4 +604,4 @@ rest_api.add_resource(BinninzuView, '/binninzu-data/')
 
 rest_api.add_resource(PossavsView, '/possavs/')
 rest_api.add_resource(PossavsDataView, '/possavs-data/')
-rest_api.add_resource(PossavsDataSingleView, '/possavs-data/<id>/')
+rest_api.add_resource(PossavsDataSingleView, '/possavs-data/<int:id>/<string:_date>/<string:_time>')
